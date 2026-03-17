@@ -8,6 +8,11 @@ OUTPUT_FILE="${OUTPUT_FILE:-$OUTPUT_DIR/graph-meta.jsonl}"
 TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 LOG="${LOG:-/tmp/graph-meta-update.log}"
 
+_cleanup() {
+  rm -f "${PYSCRIPT:-}" "${TMP:-}"
+}
+trap _cleanup EXIT
+
 echo "=== Graph Meta Update $TS ===" > "$LOG"
 
 if [[ ! -x "$GITNEXUS_BIN" ]]; then

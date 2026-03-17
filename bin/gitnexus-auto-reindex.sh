@@ -4,7 +4,7 @@ set -euo pipefail
 REPO_PATH="${REPO_PATH:-$PWD}"
 GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
 USER_LOG_FILE="${LOG_FILE:-}"
-LOG_FILE="${USER_LOG_FILE:-$REPO_PATH/tmp/gitnexus-reindex.log}"
+LOG_FILE="${USER_LOG_FILE:-/tmp/gitnexus-auto-reindex-$(basename "$REPO_PATH").log}"
 META_FILE="$REPO_PATH/.gitnexus/meta.json"
 MAX_LOG_LINES="${MAX_LOG_LINES:-1000}"
 ACTION="run"
@@ -117,7 +117,7 @@ for arg in "$@"; do
       ;;
     *)
       REPO_PATH="$arg"
-      LOG_FILE="${USER_LOG_FILE:-$REPO_PATH/tmp/gitnexus-reindex.log}"
+      LOG_FILE="${USER_LOG_FILE:-/tmp/gitnexus-auto-reindex-$(basename "$REPO_PATH").log}"
       META_FILE="$REPO_PATH/.gitnexus/meta.json"
       ;;
   esac

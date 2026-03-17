@@ -39,6 +39,9 @@ is_dirty_repo() {
   [[ -n "$(git -C "$repo_path" status --porcelain --untracked-files=normal 2>/dev/null)" ]]
 }
 
+SMOKE_TMP=$(mktemp -d /tmp/gitnexus-smoke-XXXXXX)
+trap 'rm -rf "$SMOKE_TMP"' EXIT
+
 echo "== Smoke Test =="
 echo "repo_path: $REPO_PATH"
 echo "repo_name: $REPO_NAME"
@@ -53,12 +56,12 @@ if [[ "$FORCE_REINDEX" == "1" ]]; then
     if [[ -n "$embedding_flag" ]]; then
       analyze_args+=("$embedding_flag")
     fi
-    (cd "$REPO_PATH" && "$GITNEXUS_BIN" "${analyze_args[@]}" >/tmp/gitnexus-smoke-analyze.log 2>&1)
+    (cd "$REPO_PATH" && "$GITNEXUS_BIN" "${analyze_args[@]}" >"$SMOKE_TMP/analyze.log" 2>&1)
   fi
 fi
 
-(cd "$REPO_PATH" && "$GITNEXUS_BIN" status | tee /tmp/gitnexus-smoke-status.log)
-(cd "$REPO_PATH" && "$GITNEXUS_BIN" list >/tmp/gitnexus-smoke-list.log)
+(cd "$REPO_PATH" && "$GITNEXUS_BIN" status | tee "$SMOKE_TMP/status.log")
+(cd "$REPO_PATH" && "$GITNEXUS_BIN" list >"$SMOKE_TMP/list.log")
 
 context_json="$(cd "$REPO_PATH" && "$GITNEXUS_BIN" context --repo "$REPO_NAME" "$SYMBOL_NAME" 2>&1)"
 echo "$context_json" | jq -e '.status == "found"' >/dev/null

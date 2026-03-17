@@ -84,22 +84,28 @@ except Exception:
   echo "$md"
 }
 
+_escape_cypher() {
+  # Escape single quotes for Cypher string literals
+  printf '%s' "${1//\'/\\\'}"
+}
+
 cmd_impact() {
   local target="$1"
   shift
-  local repo_flag
+  local repo_flag safe_target
   repo_flag=$(_detect_repo "$@")
+  safe_target=$(_escape_cypher "$target")
   _log "impact fallback view for $target"
   echo -e "\n${CYAN}=== upstream ===${NC}\n"
   _run_cypher "$repo_flag" \
-    "MATCH (a)-[r:CodeRelation]->(b) WHERE b.name = '$target' AND r.type = 'CALLS' RETURN a.name AS caller, a.filePath AS file LIMIT 30"
+    "MATCH (a)-[r:CodeRelation]->(b) WHERE b.name = '$safe_target' AND r.type = 'CALLS' RETURN a.name AS caller, a.filePath AS file LIMIT 30"
   echo -e "\n${CYAN}=== downstream ===${NC}\n"
   _run_cypher "$repo_flag" \
-    "MATCH (a)-[r:CodeRelation]->(b) WHERE a.name = '$target' AND r.type = 'CALLS' RETURN b.name AS callee, b.filePath AS file LIMIT 30"
+    "MATCH (a)-[r:CodeRelation]->(b) WHERE a.name = '$safe_target' AND r.type = 'CALLS' RETURN b.name AS callee, b.filePath AS file LIMIT 30"
 }
 
-cmd_query()   { local repo_flag; repo_flag=$(_detect_repo "$@"); _gitnexus query $repo_flag "$@" 2>/dev/null; }
-cmd_context() { local repo_flag; repo_flag=$(_detect_repo "$@"); _gitnexus context $repo_flag "$@" 2>/dev/null; }
+cmd_query()   { local repo_flag; repo_flag=$(_detect_repo "$@"); _gitnexus query "$repo_flag" "$@" 2>/dev/null; }
+cmd_context() { local repo_flag; repo_flag=$(_detect_repo "$@"); _gitnexus context "$repo_flag" "$@" 2>/dev/null; }
 cmd_cypher()  { local repo_flag; repo_flag=$(_detect_repo "$@"); _run_cypher "$repo_flag" "$@"; }
 cmd_status()  { _gitnexus status 2>/dev/null; echo ""; _gitnexus list 2>/dev/null; }
 
