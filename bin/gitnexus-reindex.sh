@@ -30,6 +30,12 @@ _has_embeddings() {
 _reindex_dir() {
   local dir="$1"
   [[ -d "$dir/.git" ]] || return 0
+
+  # Skip repos with no commits (git init only)
+  if ! (cd "$dir" && git rev-parse HEAD >/dev/null 2>&1); then
+    return 0
+  fi
+
   TOTAL=$((TOTAL + 1))
 
   local repo commits
