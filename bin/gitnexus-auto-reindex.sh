@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_PATH="${REPO_PATH:-$PWD}"
 GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
 USER_LOG_FILE="${LOG_FILE:-}"
@@ -8,6 +9,9 @@ LOG_FILE="${USER_LOG_FILE:-/tmp/gitnexus-auto-reindex-$(basename "$REPO_PATH").l
 META_FILE="$REPO_PATH/.gitnexus/meta.json"
 MAX_LOG_LINES="${MAX_LOG_LINES:-1000}"
 ACTION="run"
+
+# Source common functions
+source "$SCRIPT_DIR/../lib/common.sh"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -37,18 +41,6 @@ rotate_log() {
       tail -n "$MAX_LOG_LINES" "$LOG_FILE" > "${LOG_FILE}.tmp"
       mv "${LOG_FILE}.tmp" "$LOG_FILE"
     fi
-  fi
-}
-
-embedding_flag() {
-  if [[ ! -f "$META_FILE" ]]; then
-    return 0
-  fi
-
-  local embedding_count
-  embedding_count=$(python3 -c "import json; print(json.load(open('$META_FILE')).get('stats', {}).get('embeddings', 0))" 2>/dev/null || echo "0")
-  if [[ "$embedding_count" =~ ^[0-9]+$ ]] && (( embedding_count > 0 )); then
-    echo "--embeddings"
   fi
 }
 
@@ -95,7 +87,7 @@ run_reindex() {
     analyze_args+=(--force)
   fi
   local maybe_embeddings
-  maybe_embeddings="$(embedding_flag)"
+  maybe_embeddings="$(embedding_flag "$REPO_PATH")"
   if [[ -n "$maybe_embeddings" ]]; then
     analyze_args+=("$maybe_embeddings")
   fi

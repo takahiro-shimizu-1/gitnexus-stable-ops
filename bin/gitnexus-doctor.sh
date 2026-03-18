@@ -19,7 +19,7 @@ if [[ ! -d "$ROOT_DIR/.gitnexus" ]]; then
 fi
 
 stable_version="$("$GITNEXUS_BIN" --version)"
-global_version="$(gitnexus --version 2>/dev/null || echo 'unavailable')"
+global_version="$(command -v gitnexus >/dev/null 2>&1 && gitnexus --version 2>/dev/null || echo 'unavailable')"
 config_summary="$(awk '
   $0 ~ /^\[mcp_servers\.gitnexus\]/ {in_block=1; print; next}
   in_block && $0 ~ /^\[/ {exit}

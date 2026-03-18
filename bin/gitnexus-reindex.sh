@@ -13,26 +13,20 @@ TOTAL=0
 SKIPPED=0
 FAILED=0
 
+# Source common functions
+source "$SCRIPT_DIR/../lib/common.sh"
+
 if [[ ! -x "$GITNEXUS_BIN" ]]; then
   echo "ERROR: gitnexus stable wrapper not found: $GITNEXUS_BIN" >&2
   exit 1
 fi
-
-_has_embeddings() {
-  local dir="$1"
-  local meta="$dir/.gitnexus/meta.json"
-  [[ -f "$meta" ]] || return 1
-  local count
-  count=$(jq -r '.stats.embeddings // 0' "$meta" 2>/dev/null || echo 0)
-  [[ "$count" =~ ^[0-9]+$ ]] && (( count > 0 ))
-}
 
 _reindex_dir() {
   local dir="$1"
   [[ -d "$dir/.git" ]] || return 0
 
   # Skip repos with no commits (git init only)
-  if ! (cd "$dir" && git rev-parse HEAD >/dev/null 2>&1); then
+  if skip_empty_repo "$dir"; then
     return 0
   fi
 
