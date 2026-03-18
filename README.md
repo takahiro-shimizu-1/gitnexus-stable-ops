@@ -1,6 +1,6 @@
 # 🔧 gitnexus-stable-ops
 
-**Operational toolkit for running [GitNexus](https://github.com/nicholasgasior/gitnexus) with a pinned, stable CLI/MCP workflow.**
+**Operational toolkit for running [GitNexus](https://github.com/abhigyanpatwari/GitNexus) with a pinned, stable CLI/MCP workflow.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/ShunsukeHayashi/gitnexus-stable-ops?style=social)](https://github.com/ShunsukeHayashi/gitnexus-stable-ops)

@@ -14,30 +14,15 @@ FORCE_REINDEX="${FORCE_REINDEX:-1}"
 ALLOW_DIRTY_REINDEX="${ALLOW_DIRTY_REINDEX:-0}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+# Source common functions
+source "$SCRIPT_DIR/../lib/common.sh"
+
 if [[ ! -x "$GITNEXUS_BIN" ]]; then
   echo "ERROR: gitnexus stable wrapper not found: $GITNEXUS_BIN" >&2
   exit 1
 fi
 
-embedding_flag_for_repo() {
-  local repo_path="$1"
-  local meta_path="$repo_path/.gitnexus/meta.json"
-  if [[ ! -f "$meta_path" ]]; then
-    return 0
-  fi
-
-  local embedding_count
-  embedding_count="$(jq -r '.stats.embeddings // 0' "$meta_path" 2>/dev/null || echo 0)"
-  if [[ "$embedding_count" =~ ^[0-9]+$ ]] && (( embedding_count > 0 )); then
-    echo "--embeddings"
-  fi
-}
-
-is_dirty_repo() {
-  local repo_path="$1"
-  [[ -d "$repo_path/.git" ]] || return 1
-  [[ -n "$(git -C "$repo_path" status --porcelain --untracked-files=normal 2>/dev/null)" ]]
-}
+# embedding_flag and is_dirty_repo are provided by lib/common.sh
 
 SMOKE_TMP=$(mktemp -d /tmp/gitnexus-smoke-XXXXXX)
 trap 'rm -rf "$SMOKE_TMP"' EXIT
@@ -52,7 +37,7 @@ if [[ "$FORCE_REINDEX" == "1" ]]; then
     echo "SKIP: analyze --force on dirty worktree $REPO_PATH (set ALLOW_DIRTY_REINDEX=1 to override)"
   else
     analyze_args=(analyze --force)
-    embedding_flag="$(embedding_flag_for_repo "$REPO_PATH")"
+    embedding_flag="$(embedding_flag "$REPO_PATH")"
     if [[ -n "$embedding_flag" ]]; then
       analyze_args+=("$embedding_flag")
     fi

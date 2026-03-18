@@ -11,6 +11,8 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+# Note: gni keeps its own function copies for standalone execution.
+# Other scripts use lib/common.sh instead.
 _log()  { echo -e "${GREEN}[gni]${NC} $*" >&2; }
 _warn() { echo -e "${YELLOW}[gni]${NC} $*" >&2; }
 _err()  { echo -e "${RED}[gni]${NC} $*" >&2; }
