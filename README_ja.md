@@ -15,6 +15,8 @@
 
 [合同会社みやび (LLC Miyabi)](https://miyabi-ai.jp) が開発 — GitNexus でインデックスされた 25 以上のリポジトリを本番環境で管理しています。
 
+> **⚠️ ライセンスに関する注意**: このリポジトリは **MIT ライセンス** で公開されており、ラッパースクリプト・ツール・ドキュメントのみが対象です。**[GitNexus](https://github.com/abhigyanpatwari/GitNexus) 本体は [PolyForm NonCommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/) ライセンスです。** このツールキットは GitNexus CLI を呼び出しますが、GitNexus のソースコードを含んでいません。商用利用の場合は [GitNexus のライセンス](https://github.com/abhigyanpatwari/GitNexus/blob/main/LICENSE) を確認してください。
+
 ---
 
 ## 課題

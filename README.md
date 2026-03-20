@@ -16,6 +16,8 @@
 
 Built by [合同会社みやび (LLC Miyabi)](https://miyabi-ai.jp) — Managing 25+ repositories indexed with GitNexus in production.
 
+> **⚠️ License Notice**: This repository is licensed under **MIT** and covers only the wrapper scripts, tooling, and documentation. **[GitNexus](https://github.com/abhigyanpatwari/GitNexus) itself is licensed under [PolyForm NonCommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/).** This toolkit calls the GitNexus CLI but does not include or redistribute any GitNexus source code. Please review the [GitNexus license](https://github.com/abhigyanpatwari/GitNexus/blob/main/LICENSE) before using it in commercial contexts.
+
 ---
 
 ## Problem
@@ -187,6 +189,8 @@ Running in production at 合同会社みやび:
 ## License
 
 MIT — See [LICENSE](LICENSE).
+
+**Note**: The MIT license applies only to the wrapper scripts, tooling, and documentation in this repository. [GitNexus](https://github.com/abhigyanpatwari/GitNexus) (the underlying tool) is licensed under [PolyForm NonCommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/) by [@abhigyanpatwari](https://github.com/abhigyanpatwari). No GitNexus source code is included in this repository.
 
 ## Built by
 
