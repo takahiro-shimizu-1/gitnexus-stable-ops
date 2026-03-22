@@ -2,11 +2,11 @@
 set -euo pipefail
 
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
-GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+GITNEXUS_BIN="${GITNEXUS_BIN:-$SCRIPT_DIR/gitnexus-portable.sh}"
 REPOS_DIR="${REPOS_DIR:-$HOME/dev}"
 LOOKBACK_HOURS="${LOOKBACK_HOURS:-24}"
 LOG="${LOG:-/tmp/gitnexus-reindex.log}"
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RUN_GRAPH_META="${RUN_GRAPH_META:-0}"
 CHANGED=0
 TOTAL=0

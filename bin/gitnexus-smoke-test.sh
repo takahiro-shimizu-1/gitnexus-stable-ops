@@ -9,10 +9,10 @@ fi
 REPO_PATH="$1"
 REPO_NAME="$2"
 SYMBOL_NAME="$3"
-GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+GITNEXUS_BIN="${GITNEXUS_BIN:-$SCRIPT_DIR/gitnexus-portable.sh}"
 FORCE_REINDEX="${FORCE_REINDEX:-1}"
 ALLOW_DIRTY_REINDEX="${ALLOW_DIRTY_REINDEX:-0}"
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Source common functions
 source "$SCRIPT_DIR/../lib/common.sh"

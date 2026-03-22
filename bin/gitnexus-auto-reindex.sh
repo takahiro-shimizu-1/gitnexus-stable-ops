@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_PATH="${REPO_PATH:-$PWD}"
-GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
+GITNEXUS_BIN="${GITNEXUS_BIN:-$SCRIPT_DIR/gitnexus-portable.sh}"
 USER_LOG_FILE="${LOG_FILE:-}"
 LOG_FILE="${USER_LOG_FILE:-/tmp/gitnexus-auto-reindex-$(basename "$REPO_PATH").log}"
 META_FILE="$REPO_PATH/.gitnexus/meta.json"

@@ -3,7 +3,7 @@ set -euo pipefail
 
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
+GITNEXUS_BIN="${GITNEXUS_BIN:-$SCRIPT_DIR/gitnexus-portable.sh}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/out}"
 OUTPUT_FILE="${OUTPUT_FILE:-$OUTPUT_DIR/graph-meta.jsonl}"
 TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)

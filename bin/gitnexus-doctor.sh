@@ -4,9 +4,9 @@ set -euo pipefail
 ROOT_DIR="${1:-$PWD}"
 REPO_NAME="${2:-$(basename "$ROOT_DIR")}"
 SYMBOL="${3:-}"
-GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
-CODEX_CONFIG="${CODEX_CONFIG:-$HOME/.codex/config.toml}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+GITNEXUS_BIN="${GITNEXUS_BIN:-$SCRIPT_DIR/gitnexus-portable.sh}"
+CODEX_CONFIG="${CODEX_CONFIG:-$HOME/.codex/config.toml}"
 
 if [[ ! -x "$GITNEXUS_BIN" ]]; then
   echo "ERROR: gitnexus stable wrapper not found: $GITNEXUS_BIN" >&2

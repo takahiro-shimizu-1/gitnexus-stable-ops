@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-GITNEXUS_BIN="${GITNEXUS_BIN:-$HOME/.local/bin/gitnexus-stable}"
+GITNEXUS_BIN="${GITNEXUS_BIN:-$SCRIPT_DIR/gitnexus-portable.sh}"
 REGISTRY_PATH="${REGISTRY_PATH:-$HOME/.gitnexus/registry.json}"
 ALLOW_DIRTY_REINDEX="${ALLOW_DIRTY_REINDEX:-0}"
 
